@@ -9,7 +9,7 @@ apt-get install -y nginx
 service nginx start
 
 # Create a custom index page
-echo "Holberton School for the win!" > /var/www/html/index.html
+echo "Holberton School" > /var/www/html/index.html
 
 # Ensure Nginx is serving from /var/www/html
 # Modify default site config (this guarantees port 80 is active)
