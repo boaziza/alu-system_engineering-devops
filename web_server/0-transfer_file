@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
-# This script transfers a file to a remote server using scp with strict host key checking disabled
+# This script transfers a file to a remote server using scp
 
-# Check if exactly 4 parameters are provided
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Check for correct number of arguments
 if [ "$#" -ne 4 ]; then
     echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
     exit 1
 fi
 
-# Assign parameters to variables for readability
+# Assign arguments to variables
 FILE_TO_TRANSFER=$1
 SERVER_IP=$2
 USERNAME=$3
 SSH_KEY_PATH=$4
 
-# Use scp to transfer the file to the remote user's home directory
+# Transfer file to remote server
 scp -i "$SSH_KEY_PATH" -o StrictHostKeyChecking=no "$FILE_TO_TRANSFER" "$USERNAME@$SERVER_IP:~/"
