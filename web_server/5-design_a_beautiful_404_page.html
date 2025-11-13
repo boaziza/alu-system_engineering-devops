@@ -1,106 +1,133 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>404 – Lost in Space</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
-    background: radial-gradient(ellipse at bottom, #0b0c10, #1f2833);
-    color: #fff;
-    font-family: 'Verdana', sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  h1 {
-    font-size: 80px;
-    margin: 0;
-    animation: float 2s ease-in-out infinite;
-  }
-
-  p {
-    font-size: 22px;
-    margin: 10px 0;
-  }
-
-  .spaceship {
-    font-size: 80px;
-    animation: spin 5s linear infinite;
-  }
-
-  a {
-    color: #00ffea;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: 2px solid #00ffea;
-    border-radius: 10px;
-    transition: 0.3s;
-  }
-
-  a:hover {
-    background: #00ffea;
-    color: #0b0c10;
-    transform: scale(1.1);
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  .star {
-    position: absolute;
-    color: #fff;
-    font-size: 10px;
-    opacity: 0.8;
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>404 — Page not found</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#7dd3fc; --muted:#9aa6b2;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #071021 0%, #081426 100%);
+      color:#e6eef6;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .card{
+      max-width:1000px;
+      width:100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:18px;
+      padding:36px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:center;
+    }
+    h1{font-size:48px; margin:0 0 8px 0; letter-spacing:-1px}
+    p.lead{margin:0 0 18px 0; color:var(--muted); font-size:16px}
+    .actions{display:flex; gap:12px; align-items:center}
+    .btn{
+      background:var(--accent);
+      color:#022;
+      padding:10px 16px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow: 0 6px 18px rgba(125,211,252,0.15);
+    }
+    .btn.ghost{
+      background:transparent;
+      color:var(--accent);
+      border:1px solid rgba(125,211,252,0.14);
+    }
+    .meta{color:var(--muted); margin-top:12px; font-size:13px}
+    .illustration{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .robot{
+      width:380px;
+      max-width:100%;
+      transform: translateY(-6px);
+    }
+    footer.note{margin-top:18px; color:var(--muted); font-size:13px}
+    @media (max-width:880px){
+      .card{grid-template-columns: 1fr; padding:20px}
+      .illustration{order:-1; margin-bottom:6px}
+      h1{font-size:36px}
+    }
+    /* subtle animated stars */
+    .stars{position:absolute; inset:0; pointer-events:none; opacity:0.06}
+    .stars svg{width:100%; height:100%}
+  </style>
 </head>
 <body>
+  <div class="stars" aria-hidden="true">
+    <!-- decorative svg noise -->
+    <svg viewBox="0 0 800 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#fff">
+        <circle cx="50" cy="30" r="1.2"/>
+        <circle cx="120" cy="70" r="1.2"/>
+        <circle cx="210" cy="20" r="1.2"/>
+        <circle cx="330" cy="90" r="1.2"/>
+        <circle cx="500" cy="40" r="1.2"/>
+        <circle cx="700" cy="140" r="1.2"/>
+      </g>
+    </svg>
+  </div>
 
-<h1 class="spaceship">🛸</h1>
-<h1>404</h1>
-<p>Ceci n'est pas une page</p>
-<p>You tried to find this page, but even I am confused</p>
-<a href="http://boaziza.tech/">Navigate back to Earth 🌍</a>
+  <main class="card" role="main" aria-labelledby="title">
+    <section>
+      <h1 id="title">404 — Ceci n'est pas une page</h1>
+      <p class="lead">Looks like you took a wrong turn — the page you are looking for doesn't exist (or moved). But hey, here's something nicer than a plain error.</p>
 
-<script>
-  // Generate stars
-  const numStars = 100;
-  for(let i=0;i<numStars;i++){
-    let star = document.createElement('div');
-    star.className = 'star';
-    star.textContent = '✦';
-    star.style.top = Math.random()*100 + 'vh';
-    star.style.left = Math.random()*100 + 'vw';
-    star.style.fontSize = (Math.random()*8 + 4) + 'px';
-    star.style.opacity = Math.random();
-    document.body.appendChild(star);
-  }
+      <div class="actions">
+        <a class="btn" href="/">Take me home</a>
+        <a class="btn ghost" href="/sitemap.xml">Search site map</a>
+      </div>
 
-  // Animate stars falling slowly
-  setInterval(()=>{
-    document.querySelectorAll('.star').forEach(s=>{
-      let top = parseFloat(s.style.top);
-      top += 0.1 + Math.random()*0.2;
-      if(top>100) top = 0;
-      s.style.top = top + 'vh';
-    });
-  }, 50);
-</script>
+      <p class="meta">Tip: try removing the last part of the URL to find higher-level pages.</p>
+      <footer class="note">This is a custom 404 illustration page created for the alu-system_engineering-devops project.</footer>
+    </section>
 
+    <aside class="illustration" aria-hidden="true">
+      <!-- playful robot SVG illustration -->
+      <svg class="robot" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Friendly 404 robot">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1">
+            <stop offset="0" stop-color="#7dd3fc"/>
+            <stop offset="1" stop-color="#60a5fa"/>
+          </linearGradient>
+        </defs>
+        <g transform="translate(60,30)">
+          <rect x="70" y="120" rx="28" ry="28" width="380" height="300" fill="#071829" stroke="url(#g)" stroke-width="6"/>
+          <circle cx="260" cy="80" r="56" fill="#0b2330" stroke="url(#g)" stroke-width="6"/>
+          <circle cx="240" cy="70" r="10" fill="#7dd3fc"/>
+          <circle cx="280" cy="70" r="10" fill="#60a5fa"/>
+          <rect x="180" y="220" width="160" height="110" rx="10" fill="#071829" stroke="#0b2b3d" />
+          <text x="260" y="280" fill="#9fbdd4" font-size="28" font-family="monospace" text-anchor="middle">404</text>
+          <g transform="translate(200,350)">
+            <rect x="0" y="0" width="40" height="12" rx="4" fill="#0b2b3d"/>
+            <rect x="120" y="0" width="40" height="12" rx="4" fill="#0b2b3d"/>
+          </g>
+          <g transform="translate(20,300)" opacity="0.9">
+            <circle cx="60" cy="60" r="6" fill="#7dd3fc"/>
+            <circle cx="500" cy="40" r="6" fill="#60a5fa"/>
+          </g>
+        </g>
+      </svg>
+    </aside>
+  </main>
 </body>
 </html>
+
