@@ -1,22 +1,21 @@
 #!/usr/bin/env bash
-# Configure Nginx to redirect /redirect_me permanently (301) on a fresh Ubuntu machine
+# Configure Nginx to redirect /redirect_me permanently (301)
 
-# Update package lists and install Nginx
-apt-get update -y
-apt-get install -y nginx
+sudo apt-get update -y >/dev/null 2>&1
+sudo apt-get install -y nginx >/dev/null 2>&1
 
-# Overwrite the default Nginx configuration
-cat > /etc/nginx/sites-available/default <<EOF
+sudo tee /etc/nginx/sites-available/default > /dev/null << 'EOF'
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
     root /var/www/html;
-    index index.html index.htm index.nginx-debian.html;
+    index index.html;
+
     server_name _;
 
     location / {
-        try_files \$uri \$uri/ =404;
+        try_files $uri $uri/ =404;
     }
 
     location /redirect_me {
@@ -25,8 +24,5 @@ server {
 }
 EOF
 
-# Test Nginx configuration
-nginx -t
-
-# Restart Nginx to apply changes
-systemctl restart nginx
+sudo nginx -t >/dev/null 2>&1
+sudo systemctl restart nginx
