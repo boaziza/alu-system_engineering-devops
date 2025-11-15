@@ -1,22 +1,13 @@
 #!/usr/bin/env bash
-# Bash script that installs and configures HAProxy load balancer
+#Bash script that installs HAProxy & makes configurations
 
-set -e
-
-# Install HAProxy
-apt-get update -y
-apt-get install -y haproxy
-
-# Enable HAProxy service
-sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy || echo "ENABLED=1" > /etc/default/haproxy
-
-# Configure HAProxy
-cat << 'EOF' > /etc/haproxy/haproxy.cfg
-global
-    daemon
-    maxconn 256
-
-defaults
+apt-get -y install software-properties-common
+add-apt-repository ppa:vbernat/haproxy-1.8
+apt-get update
+apt-get -y install haproxy
+echo "ENABLED=1" >> /etc/default/haproxy
+printf %s "listen 6799-webs
+    bind *:80
     mode http
     timeout connect 5000ms
     timeout client 50000ms
