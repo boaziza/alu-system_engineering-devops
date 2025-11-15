@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 # Configure Nginx to redirect /redirect_me permanently (301)
 
-# Install Nginx silently
-apt-get update -y >/dev/null 2>&1
-apt-get install -y nginx >/dev/null 2>&1
+sudo apt-get update -y >/dev/null 2>&1
+sudo apt-get install -y nginx >/dev/null 2>&1
 
-# Replace default server block
-cat << 'EOF' > /etc/nginx/sites-available/default
+sudo tee /etc/nginx/sites-available/default > /dev/null << 'EOF'
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -26,6 +24,5 @@ server {
 }
 EOF
 
-# Restart Nginx
-systemctl restart nginx
-sleep 2
+sudo nginx -t >/dev/null 2>&1
+sudo systemctl restart nginx
