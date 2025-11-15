@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-# Configures an Ubuntu server to redirect /redirect_me with a 301 status
+# Configure Nginx to redirect /redirect_me permanently (301)
 
-# Install nginx
+# Install Nginx silently
 apt-get update -y >/dev/null 2>&1
 apt-get install -y nginx >/dev/null 2>&1
 
-# Configure the redirect
-printf "%s\n" "server {
+# Replace default server block
+cat << 'EOF' > /etc/nginx/sites-available/default
+server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
@@ -16,13 +17,15 @@ printf "%s\n" "server {
     server_name _;
 
     location / {
-        try_files \$uri \$uri/ =404;
+        try_files $uri $uri/ =404;
     }
 
     location /redirect_me {
         return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
-}" > /etc/nginx/sites-available/default
+}
+EOF
 
-# Restart nginx
+# Restart Nginx
 systemctl restart nginx
+sleep 2
