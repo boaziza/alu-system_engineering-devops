@@ -1,18 +1,27 @@
 #!/usr/bin/env bash
-# Configure Nginx to redirect /redirect_me permanently (301)
+# Configure Nginx to redirect /redirect_me to YouTube with 301 status
 
-sudo apt-get update -y >/dev/null 2>&1
-sudo apt-get install -y nginx >/dev/null 2>&1
+# Update package list
+apt-get update -y
 
-sudo tee /etc/nginx/sites-available/default > /dev/null << 'EOF'
+# Install Nginx
+apt-get install -y nginx
+
+# Create custom index page with hostname
+echo "Hello World!" > /var/www/html/index.html
+
+# Configure Nginx with redirect
+cat > /etc/nginx/sites-available/default << 'EOF'
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
     root /var/www/html;
-    index index.html;
+    index index.html index.htm;
 
     server_name _;
+
+    add_header X-Served-By $hostname;
 
     location / {
         try_files $uri $uri/ =404;
@@ -24,5 +33,8 @@ server {
 }
 EOF
 
-sudo nginx -t >/dev/null 2>&1
-sudo systemctl restart nginx
+# Test Nginx configuration
+nginx -t
+
+# Restart Nginx to apply changes
+service nginx restart
